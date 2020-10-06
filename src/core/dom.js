@@ -44,7 +44,6 @@ class Dom {
     return this.$el.querySelectorAll(selector)
   }
   find(selector) {
-    console.log(selector);
     return $(this.$el.querySelector(selector))
   }
   css(styles = {}) {
@@ -57,6 +56,19 @@ class Dom {
   }
   removeClass(className) {
     this.$el.classList.remove(className)
+  }
+  id(parse) {
+    if (parse) {
+      const paresed = this.id().split(':')
+      return {
+        row: +paresed[0],
+        col: +paresed[1],
+      }
+    } else return this.data.id
+  }
+  focus() {
+    this.$el.focus()
+    return this
   }
 }
 export function $(selector) {
