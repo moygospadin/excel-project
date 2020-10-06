@@ -7,9 +7,11 @@ import { TableSelection } from './TableSelection'
 
 export class Table extends ExcelComponent {
   static className = 'excel__table'
-  constructor($root) {
+  constructor($root, options) {
     super($root, {
-      listeners: ['mousedown', 'keydown'],
+      name: 'Table',
+      listeners: ['mousedown', 'keydown', 'input'],
+      ...options,
     })
     this.MAX_COL = 25
     this.MAX_ROW = 30
@@ -22,14 +24,27 @@ export class Table extends ExcelComponent {
   }
   init() {
     super.init()
-    const $cell = this.$root.find('[data-id="0:0"]')
+    this.selectCell(this.$root.find('[data-id="0:0"]'))
+    this.$on('formula:input', (text) => {
+      this.selection.current.text(text)
+      console.log('Table:', text)
+    })
+    this.$on('formula:done', () => {
+      this.selection.current.focus()
+    })
+  }
+  selectCell($cell) {
     this.selection.select($cell)
+    this.$emit('table:input', $cell)
   }
   onMousedown(event) {
     if (shouldResize(event)) {
       tableResizeHandler(event, this.$root)
     } else if (isCell(event)) {
       const $target = $(event.target)
+
+      const id = this.selection.current.id(true)
+      this.selectCell(this.$root.find(`[data-id="${id.row}:${id.col}"]`))
       if (event.shiftKey) {
         const $cells = matrix($target, this.selection.current).map((id) =>
           this.$root.find(`[data-id="${id}"]`)
@@ -56,7 +71,10 @@ export class Table extends ExcelComponent {
       const $next = this.$root.find(
         nextSelector(key, id, this.MAX_COL, this.MAX_ROW)
       )
-      this.selection.select($next)
+      this.selectCell($next)
     }
+  }
+  onInput(event) {
+    this.$emit('table:input', $(event.target))
   }
 }
