@@ -43,8 +43,6 @@ export class Table extends ExcelComponent {
     } else if (isCell(event)) {
       const $target = $(event.target)
 
-      const id = this.selection.current.id(true)
-      this.selectCell(this.$root.find(`[data-id="${id.row}:${id.col}"]`))
       if (event.shiftKey) {
         const $cells = matrix($target, this.selection.current).map((id) =>
           this.$root.find(`[data-id="${id}"]`)
@@ -54,6 +52,9 @@ export class Table extends ExcelComponent {
         this.selection.select($target)
       }
     }
+    const id = this.selection.current.id(true)
+
+    this.selectCell(this.$root.find(`[data-id="${id.row}:${id.col}"]`))
   }
   onKeydown(event) {
     const keys = [
