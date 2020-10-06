@@ -11,13 +11,11 @@
     "comma-dangle": "off",
     "require-jsdoc": "off",
     "linebreak-style": "off",
-    "object-curly-spacing": "off",
-    "operator-linebreak": "off",
-    "no-debugger": "off",
-    "spaced-comment": "off"
+    "no-debugger": "off"
   },
   "extends": [
     "eslint:recommended",
-    "google"
+    "google",
+    "prettier"
   ]
 }
