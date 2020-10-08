@@ -32,7 +32,7 @@ export class DomListener {
   }
 }
 
-// input => onInput
+
 function getMethodName(eventName) {
   return 'on' + capitalize(eventName)
 }
