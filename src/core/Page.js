@@ -1,9 +1,9 @@
 export class Page {
   constructor(params) {
-    this.params = params
+    this.params = params;
   }
   getRoot() {
-    throw new Error('Method "getRoot" should be implemented')
+    throw new Error('Method "getRoot" should be implemented');
   }
   afterRender() {}
   destroy() {}
