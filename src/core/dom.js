@@ -13,7 +13,6 @@ class Dom {
   }
 
   text(text) {
-    console.log(text);
     if (typeof text !== 'undefined') {
       this.$el.textContent = text
       return this
@@ -93,7 +92,7 @@ class Dom {
     return this
   }
   attr(name, value) {
-    if (typeof value !=='undefined') {
+    if (typeof value !== 'undefined') {
       this.$el.setAttribute(name, value)
       return this
     }
